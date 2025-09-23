@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Переводы ВТБ</title>
+<meta content="Meta Content" name="description"/>
+<style>
+    :root {
+      --text-color: #333;
+      --muted: #6b7280;
+      --hover: #1f2937;
+      --surface: #f3f4f6;
+      --surface-hover: #eef2ff;
+      --radius: 10px;
+      --icon-size: 70px;
+      --gap: 12px;
+    }
+
+    /* Базовая типографика */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    h1 {
+      font-size: 28px;
+      color: #222;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    h2 {
+      font-size: 22px;
+      color: #444;
+      margin: 25px 0 15px;
+      font-weight: 500;
+    }
+    .content { margin-bottom: 30px; }
+
+    .text {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .date {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 30px;
+    }
+
+    a {
+      color: inherit;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      transition: color .15s ease, text-decoration-color .15s ease;
+    }
+    a:hover {
+      color: var(--hover);
+      text-decoration: underline;
+    }
+
+    /* Ряд иконок */
+    .icons-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--gap);
+      margin: 18px 0 10px;
+      flex-wrap: nowrap;  /* все в одну линию */
+    }
+
+    .icon-link {
+      display: inline-flex;
+      width: 120px;         /* ширина прямоугольника */
+      height: 60px;        /* высота */
+      border-radius: 8px;
+      overflow: hidden;
+      align-items: center; /* центрируем иконку по вертикали */
+      justify-content: center; /* и по горизонтали */
+      background: var(--surface);
+      text-decoration: none;
+      transition: transform .12s ease, background-color .12s ease, box-shadow .12s ease;
+    }
+
+    .icon-link:hover {
+      transform: translateY(-2px);
+      background: var(--surface-hover);
+      box-shadow: 0 6px 14px -8px rgba(0,0,0,.25);
+    }
+    .icon-link img {
+        display: block;
+        max-height: 60%;   /* чтобы иконки не растягивались */
+        max-width: 80%;
+        object-fit: contain;
+    }
+    .links-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 18px;
+      margin: 8px 0 0;
+      flex-wrap: wrap;
+      font-size: 16px;   /* как .text */
+      line-height: 1.6;  /* как у body */
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 15px; }
+      h1 { font-size: 24px; }
+      h2 { font-size: 20px; }
+      .icon-link { height: 20px; }
+    }
+    .copy-text {
+      font-size: 16px;
+      color: var(--text-color);
+      cursor: pointer;
+      user-select: all;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: var(--surface);
+      display: inline-block;
+      transition: background-color .15s ease;
+    }
+.copy-text:hover {
+  background: var(--surface-hover);
+}
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Переводы ВТБ</h2>
+
+<h2>Лимиты</h2>
+<div class="text">Один перевод - 300 000₽
+В месяц - 1 000 000₽</div>
+<h2>Комиссии</h2>
+<div class="text">Без комиссии</div>
+<div class="text">Курс указан для перевода по номеру телефона в Анор Банк</div>
+<!-- ИКОНКИ: оставляй от 1 до 4 блоков .icon-link; пути локальные -->
+<div aria-label="Ссылки на магазины и сайт" class="icons-row" role="list"><a aria-label="Официальный сайт" class="icon-link" href="https://www.vtb.ru/" rel="noopener" role="listitem" target="_blank"><img alt="" src="C:/Users/izecs/IdeaProjects/transfer_info_generator/store icons/website.svg"/></a><a aria-label="RuStore" class="icon-link" href="https://www.rustore.ru/catalog/app/ru.vtb24.mobilebanking.android" rel="noopener" role="listitem" target="_blank"><img alt="" src="C:/Users/izecs/IdeaProjects/transfer_info_generator/store icons/rustore.png"/></a></div>
+<!-- Текстовые ссылки, выглядят как основной текст -->
+<div class="links-row">
+<a href="https://t.me/CursoUz" rel="noopener" target="_blank">Телеграм-канал Curso</a>
+<a href="https://t.me/CursoExchangeRatesBot" rel="noopener" target="_blank">Телеграм-бот</a>
+</div>
+</div>
+</body>
+</html>
