@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="260" height="53" viewBox="0 0 260 53" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Website badge full width</title>
+  <desc id="desc">Dark rounded badge with centered text Website filling the width</desc>
+  
+  <!-- Background -->
+  <rect x="0.5" y="0.5" width="259" height="52" rx="10" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="259" height="52" rx="10" stroke="#2A2A2A"/>
+  
+  <!-- Text -->
+  <text x="50%" y="50%" fill="#FFFFFF" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+        font-size="30" font-weight="600" letter-spacing="2" dominant-baseline="middle" text-anchor="middle">
+    Website
+  </text>
+</svg>
