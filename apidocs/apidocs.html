@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curso API — Документация</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.5;margin:2rem;max-width:900px}
+  code,kbd,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
+  h1{font-size:1.8rem;margin-top:0}
+  h2{font-size:1.3rem;margin-top:2rem;border-bottom:1px solid #eee;padding-bottom:.25rem}
+  .tag{display:inline-block;background:#f2f4f7;border:1px solid #e5e7eb;border-radius:6px;padding:.1rem .4rem;margin-right:.25rem;font-size:.85em}
+  .card{border:1px solid #e5e7eb;border-radius:10px;padding:1rem;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.03);margin:.75rem 0}
+  table{border-collapse:collapse;width:100%}
+  th,td{border:1px solid #e5e7eb;padding:.5rem;text-align:left;vertical-align:top}
+  th{background:#fafafa}
+  .muted{color:#6b7280}
+  .endpoint{font-weight:600}
+  .lang-switch{position:sticky;top:0;display:flex;gap:.5rem;justify-content:flex-end;background:linear-gradient(#fff,rgba(255,255,255,.6));padding:.5rem 0 .25rem;margin-bottom:.5rem}
+  .lang-switch a{border:1px solid #e5e7eb;border-radius:8px;padding:.35rem .65rem;text-decoration:none;color:#111}
+  .lang-switch a.active{background:#2563eb;color:#fff;border-color:#2563eb}
+  .lang{display:none}
+  .lang.active{display:block}
+</style>
+</head>
+<body>
+
+<nav class="lang-switch">
+  <a href="#ru" id="link-ru" class="active">🇷🇺 Русский</a>
+  <a href="#en" id="link-en">🇬🇧 English</a>
+</nav>
+
+<section id="ru" class="lang active" lang="ru">
+  <h1>Curso API</h1>
+  <p>API позволяет получать актуальные курсы валют в сервисах моментальных переводов и банках.</p>
+
+  <h2>Базовые URL</h2>
+  <div class="card">
+    <div><span class="tag">Production</span> <code>https://api.curso.best</code></div>
+    <div><span class="tag">Test</span> <code>https://test.api.curso.best</code></div>
+  </div>
+
+  <h2>Аутентификация</h2>
+  <p>Все запросы к данным выполняйте с API‑ключом в заголовке.</p>
+  <div class="card">
+    <div><code>X-API-Key: &lt;ваш_ключ&gt;</code></div>
+  </div>
+
+  <h2>Эндпоинты</h2>
+
+  <div class="card">
+    <div class="endpoint">GET /rates</div>
+    <p>Возвращает список курсов по паре валют.</p>
+    <table>
+      <thead><tr><th>Параметр</th><th>Тип</th><th>Обязателен</th><th>Описание</th></tr></thead>
+      <tbody>
+        <tr><td><code>from</code></td><td>string</td><td>да</td><td>Код валюты, которую конвертирует пользователь.</td></tr>
+        <tr><td><code>to</code></td><td>string</td><td>да</td><td>Код валюты, которую получает пользователь</td></tr>
+      </tbody>
+    </table>
+    <p>Заголовки: <code>X-API-Key</code>, <code>Accept: application/json</code></p>
+    <details>
+      <summary>Пример запроса (curl)</summary>
+      <pre>curl -H "Authorization: ApiKey YOURAPIKEY" "https://api.curso.best/rates?from=860&to=643"</pre>
+    </details>
+    <details>
+      <summary>Пример ответа</summary>
+<pre>{
+  "rates": [
+    {
+      "service": "Service Name",
+      "type": "To card",
+      "rate": 140.0,
+      "timestamp": "2025-10-07 12:00"
+    },
+    {
+      "service": "Service Name",
+      "type": "Exchange",
+      "rate": 141.0,
+      "timestamp": "2025-10-07 12:00"
+    }
+  ]
+}</pre>
+    </details>
+    <details>
+      <summary>Содержимое ответа</summary>
+<pre>service не является уникальным идентификатором сервиса перевода/банка/платёжной системы
+
+Список возможных значений type:
+* To card - перевод на карту по номеру карты или телефона
+* Cash - перевод с получением наличными
+* App Exchange - обмен в мобильном приложении банка
+* Official rate - курсы центральных банков
+* Payment system - курс платёжных систем
+* App FX Exchange - курс обмена на Forex в мобильном приложении банка или брокера
+Список может расширяться</pre>
+    </details>
+  </div>
+
+  <h2>Ошибки</h2>
+  <table>
+    <thead><tr><th>HTTP</th><th>Код</th><th>Что значит</th><th>Что делать</th></tr></thead>
+    <tbody>
+      <tr><td>422</td><td><code>validation_error</code></td><td>Отсутствует или некорректен параметр <code>from</code>/<code>to</code>.</td><td>Передайте оба параметра как строки.</td></tr>
+      <tr><td>401</td><td><code>unauthorized</code></td><td>Неверный или отсутствует <code>X-API-Key</code>.</td><td>Проверьте ключ и формат заголовка.</td></tr>
+      <tr><td>403</td><td><code>forbidden</code></td><td>Пара <code>from</code>→<code>to</code> не разрешена для ключа.</td><td>Обратитесь к поддержке для расширения доступа.</td></tr>
+      <tr><td>500</td><td><code>server_error</code></td><td>Внутренняя ошибка сервера или БД недоступна.</td><td>Повторите позже; если повторяется — напишите в поддержку.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Поддержка</h2>
+  <p>Email: <a href="mailto:general@curso.best">general@curso.best</a><br>
+     Telegram: <a href="https://t.me/CursoTeam">@CursoTeam</a></p>
+
+  <p class="muted">Версия документа: 2025‑11‑03</p>
+</section>
+
+<section id="en" class="lang" lang="en">
+  <h1>Curso API</h1>
+  <p>The API provides up-to-date currency exchange rates from instant transfer services and banks.</p>
+
+  <h2>Base URLs</h2>
+  <div class="card">
+    <div><span class="tag">Production</span> <code>https://api.curso.best</code></div>
+    <div><span class="tag">Test</span> <code>https://test.api.curso.best</code></div>
+  </div>
+
+  <h2>Authentication</h2>
+  <p>Send your API key in the request header.</p>
+  <div class="card">
+    <div><code>X-API-Key: &lt;your_key&gt;</code></div>
+  </div>
+
+  <h2>Endpoints</h2>
+
+  <div class="card">
+    <div class="endpoint">GET /rates</div>
+    <p>Returns a list of rates for a currency pair.</p>
+    <table>
+      <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>from</code></td><td>string</td><td>yes</td><td>The currency code being converted by the user.</td></tr>
+        <tr><td><code>to</code></td><td>string</td><td>yes</td><td>The currency code received by the user.</td></tr>
+      </tbody>
+    </table>
+    <p>Headers: <code>X-API-Key</code>, <code>Accept: application/json</code></p>
+    <details>
+      <summary>Example request (curl)</summary>
+      <pre>curl -H "Authorization: ApiKey YOURAPIKEY" "https://api.curso.best/rates?from=860&to=643"</pre>
+    </details>
+    <details>
+      <summary>Example response</summary>
+<pre>{
+  "rates": [
+    {
+      "service": "Service Name",
+      "type": "To card",
+      "rate": 140.0,
+      "timestamp": "2025-10-07 12:00"
+    },
+    {
+      "service": "Service Name",
+      "type": "Exchange",
+      "rate": 141.0,
+      "timestamp": "2025-10-07 12:00"
+    }
+  ]
+}</pre>
+    </details>
+    <details>
+      <summary>Response contents</summary>
+<pre>service is not a unique identifier of a transfer/bank/payment system.
+
+Possible values of type:
+* To card — transfer to a bank card by card number or phone
+* Cash — cash pickup
+* App Exchange — exchange in a bank’s mobile app
+* Official rate — Central Bank rates
+* Payment system — payment system rate
+* App FX Exchange — Forex exchange rate in a bank or broker mobile app
+The list may be extended.</pre>
+    </details>
+  </div>
+
+  <h2>Errors</h2>
+  <table>
+    <thead><tr><th>HTTP</th><th>Code</th><th>Meaning</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>422</td><td><code>validation_error</code></td><td>Missing or invalid <code>from</code>/<code>to</code> parameter.</td><td>Provide both parameters as strings.</td></tr>
+      <tr><td>401</td><td><code>unauthorized</code></td><td>Invalid or missing <code>X-API-Key</code>.</td><td>Check the key and header format.</td></tr>
+      <tr><td>403</td><td><code>forbidden</code></td><td>The <code>from</code>→<code>to</code> pair is not allowed for this key.</td><td>Contact support to extend access.</td></tr>
+      <tr><td>500</td><td><code>server_error</code></td><td>Internal server error or DB unavailable.</td><td>Retry later; if it persists, contact support.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Support</h2>
+  <p>Email: <a href="mailto:general@curso.best">general@curso.best</a><br>
+     Telegram: <a href="https://t.me/CursoTeam">@CursoTeam</a></p>
+
+  <p class="muted">Document version: 2025‑11‑03</p>
+</section>
+
+<script>
+const linkRu = document.getElementById('link-ru');
+const linkEn = document.getElementById('link-en');
+const ru = document.getElementById('ru');
+const en = document.getElementById('en');
+
+function setLang(hash) {
+  const lang = (hash || '').toLowerCase() === '#en' ? 'en' : 'ru';
+  if (lang === 'en') {
+    ru.classList.remove('active'); en.classList.add('active');
+    linkRu.classList.remove('active'); linkEn.classList.add('active');
+    if (location.hash !== '#en') history.replaceState(null,'','#en');
+    document.documentElement.lang = 'en';
+    document.title = 'Curso API — Documentation';
+  } else {
+    en.classList.remove('active'); ru.classList.add('active');
+    linkEn.classList.remove('active'); linkRu.classList.add('active');
+    if (location.hash !== '#ru') history.replaceState(null,'','#ru');
+    document.documentElement.lang = 'ru';
+    document.title = 'Curso API — Документация';
+  }
+}
+
+window.addEventListener('hashchange', () => setLang(location.hash));
+window.addEventListener('load', () => setLang(location.hash || '#ru'));
+</script>
+
+</body>
+</html>
